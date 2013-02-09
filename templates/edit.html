@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <script src="/static/js/jquery-1.9.1.js"></script>
+
+    <script src="/static/codemirror/lib/codemirror.js"></script>
+    <script src="/static/codemirror/mode/xml/xml.js"></script>
+    <script src="/static/codemirror/mode/python/python.js"></script>
+    <script src="/static/codemirror/addon/edit/matchbrackets.js"></script>
+    <script src="/static/codemirror/addon/hint/show-hint.js"></script>
+    <script src="/static/codemirror/addon/hint/python-hint.js"></script>
+    <link rel="stylesheet" href="/static/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" href="/static/codemirror/theme/cobalt.css">
+    <link rel="stylesheet" href="/static/codemirror/addon/hint/show-hint.css">
+
+    {% block head %}
+    {% endblock %}
+
+    <!-- Fav and touch icons -->
+    <link rel="shortcut icon" href="{{static}}/ico/favicon.ico">
+
+    <style>
+
+        .CodeMirror {
+          font-family: monospace;
+          height: 500px;
+          font-size:14px;
+          line-height:17px;
+        }
+
+    </style>
+
+    <script>
+    
+    $(function() {
+        var t=$("#content")[0];
+        var c={
+            mode:"python",
+            lineNumbers:true,
+            indentUnit: 4,
+            textWrapping: false,
+            theme: "cobalt",
+            matchBrackets: true
+        };
+        var myCodeMirror = CodeMirror.fromTextArea(t,c);
+
+        $("#save").click(function () { console.log(myCodeMirror.getValue()); });
+    });
+
+    </script>
+
+
+</head>
+
+{{path}}<br><br>
+
+<button id="save">save file</button>
+
+<br><br>
+
+<textarea id="content">{{ content|safe }}</textarea>
+
+</html>

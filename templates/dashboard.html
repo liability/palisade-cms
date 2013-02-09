@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    {% block head %}
+    {% endblock %}
+
+    <!-- Fav and touch icons -->
+    <link rel="shortcut icon" href="{{static}}/ico/favicon.ico">
+
+</head>
+
+{{path}}<br>
+
+<table><tr><td>
+
+Files:<br>
+<br>
+
+{% for f in files %}
+  {{ f|safe }}<br>
+{% endfor %}
+
+
+</td><td>
+
+Editor:<br>
+
+<br>
+</td></tr>
+</table>
+
+</html>

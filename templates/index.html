@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <link rel="shortcut icon" href="{{static}}/ico/favicon.ico">
+
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <link href='http://fonts.googleapis.com/css?family=Share+Tech+Mono' rel='stylesheet' type='text/css'>
+
+    <script src="/static/js/jquery-1.9.1.js"></script>
+    <script src="/static/js/signals.js"></script>
+    <script src="/static/js/crossroads.js"></script>
+    <script src="/static/js/jquery.masonry.min.js"></script>
+    <script src="/static/js/mustache.js"></script>
+    <script src="/static/js/jquery.box.editor.js"></script>
+
+    <script id="LoginTemplate" type="text/html">
+        <div class='box col2 admin' id='box33'>
+        <h1>Palisade login</h1>
+        <p>
+            <input type="text" name="username" placeholder="username">
+            <input type="password" name="password" placeholder="password">
+            <button id="try_login" class="button tiny">Login</button>
+        </p></div>
+    </script>
+
+    <script>
+    $(function(){
+
+        var $container = $('#container');
+
+        $container.imagesLoaded(function(){
+            $container.masonry({
+                itemSelector : '.box',
+                columnWidth : 200,
+                isAnimated: true
+            });
+        });
+
+        //$('.box').boxEditor({});
+
+        $("#login").click(function () { window.location.hash="#/login" });
+
+        window.onhashchange = function() {
+            crossroads.parse(window.location.hash.substring(1));
+        };
+
+        crossroads.parse(window.location.hash.substring(1));
+
+    });
+
+    var route1 = crossroads.addRoute('/news/{id}', function(id){
+        console.log("YES!!! " + id);
+    });
+
+    var route2 = crossroads.addRoute('/login', function(){
+        console.log("Append login box to page... ");
+        var view = {
+          title: "Joe",
+          calc: function () {
+            return 2 + 4;
+          }
+        };
+
+        var output = Mustache.render($("#LoginTemplate").html(), view);
+        $("#container").prepend(output).masonry( 'reload' );
+    });
+
+
+    </script>
+
+</head>
+<body>
+    <div class="wrapper">
+
+        <div id="container" class="clearfix">
+
+            <div class="box col2" id="box1">
+                <h1>Title</h1>
+                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.</p>
+            </div>
+
+            <div class="box col2" id="box2" style="color:white; background-image:url(/static/img/demo.png)">
+                <p>Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus. Praesent elementum hendrerit tortor. Sed semper lorem at felis.</p>
+            </div>
+
+
+            <div class="box col1" id="box3">
+                <img src="/static/img/demo.png">
+                <p>Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. </p>
+            </div>
+
+            {% for f in files %}
+                <div class="box col1" id="b{{ f }}">
+                    <p>{{ f|safe }}</p>
+                </div>
+            {% endfor %}
+
+        </div>
+
+        <div class="push"></div>
+    </div>
+    <div class="footer">
+
+        <button id="login">Login</button>
+
+    </div>
+
+</body>
+</html>
